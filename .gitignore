@@ -1,0 +1,9 @@
+.autotools
+.cproject
+.project
+.DS_Store
+.DS_Store?
+*.o
+*.a
+test/RunnableTest
+test/SimpleThreadTest
