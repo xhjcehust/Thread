@@ -10,7 +10,13 @@
 
 int main(int argc, char *argv[])
 {
-	int ret = __Main(argc, argv);
+	int ret = 1;
+
+	try {
+		ret = __Main(argc, argv);
+	} catch (...) {
+
+	}
 	Thread::waitAll();
 	return ret;
 }

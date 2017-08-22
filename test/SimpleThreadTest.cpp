@@ -5,31 +5,27 @@
  *      Author: marsnowxiao
  */
 #include <iostream>
+#include <unistd.h>
 #include <Thread.h>
 
 class SimpleThread: public Thread
 {
 public:
-	SimpleThread(): Thread()
-    	{}
-	SimpleThread(Runnable *runnable): Thread(runnable)
-    {}
     virtual void run()
     {
     		Thread::run();
-        std::cout << "SimpleThread\n";
+        std::cout << "I am a Thread\n";
+        sleep(2);
     }
     ~SimpleThread()
     {
-    		std::cout << "~SimpleThread\n";
+    		std::cout << "I can free myself\n";
     }
 };
 
 int main(int argc, char* argv[])
 {
 	SimpleThread *thread = new SimpleThread;
-	thread->start();
-	thread = new SimpleThread;
 	thread->start();
 	return 0;
 }
