@@ -5,6 +5,7 @@
  *      Author: marsnowxiao
  */
 
+#include <sstream>
 #include <sched.h>
 #include "_Thread.h"
 #include "Exception/IllegalThreadStateException.h"
@@ -14,7 +15,9 @@
 
 Thread::Thread()
 {
-	init(NULL, "Thread-" + std::to_string(nextThreadNum()));
+	std::ostringstream os;
+	os << nextThreadNum();
+	init(NULL, "Thread-" + os.str());
 }
 
 Thread::Thread(const std::string &name)
@@ -24,7 +27,9 @@ Thread::Thread(const std::string &name)
 
 Thread::Thread(RunnablePtr target)
 {
-	init(target, "Thread-" + std::to_string(nextThreadNum()));
+	std::ostringstream os;
+	os << nextThreadNum();
+	init(target, "Thread-" + os.str());
 }
 
 int Thread::nextThreadNum()
