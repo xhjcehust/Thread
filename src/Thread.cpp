@@ -130,6 +130,11 @@ void Thread::waitAll()
 	}
 }
 
+void Thread::addRunnablePtr(const RunnablePtr& runnable)
+{
+	runnables.push_back(runnable);
+}
+
 Thread::~Thread()
 {
 

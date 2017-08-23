@@ -5,6 +5,7 @@
  *      Author: marsnowxiao
  */
 
+#include "_Thread.h"
 #include "_Runnable.h"
 
 Runnable::Runnable()
@@ -14,6 +15,7 @@ Runnable::Runnable()
 	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 	pthread_mutex_init(&lock, &attr);
 	pthread_mutexattr_destroy(&attr);
+	Thread::allThreads[pthread_self()]->addRunnablePtr(this);
 }
 
 Runnable::~Runnable()
