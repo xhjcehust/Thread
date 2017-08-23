@@ -5,5 +5,4 @@
 .DS_Store?
 *.o
 *.a
-test/RunnableTest
-test/SimpleThreadTest
+test/*Test
