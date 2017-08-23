@@ -15,7 +15,13 @@ Runnable::Runnable()
 	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 	pthread_mutex_init(&lock, &attr);
 	pthread_mutexattr_destroy(&attr);
-	Thread::allThreads[pthread_self()]->addRunnablePtr(this);
+	/**
+	 * Only When Main Thread is added into allThreads, start to manager
+	 * all Runnable Objects
+	 */
+	if (Thread::allThreads.size() > 0) {
+		Thread::allThreads[pthread_self()]->addRunnablePtr(this);
+	}
 }
 
 Runnable::~Runnable()
