@@ -1,5 +1,5 @@
 CPP =	g++
-CFLAGS =  -O -Wall -Wextra -Wpointer-arith -Wconditional-uninitialized -Wno-unused-parameter -Wno-deprecated-declarations -Werror -g 
+CFLAGS =  -O -Wall -Werror -g 
 LIBS = ../src/Thread.a
 INCS = -I ../src
 
