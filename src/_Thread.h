@@ -9,6 +9,7 @@
 #define _THREAD_H_
 
 #include <string>
+#include <vector>
 #include <map>
 #include <pthread.h>
 #include "_Runnable.h"
@@ -29,6 +30,7 @@ public:
 	void setPolicy(int policy);
 	virtual void run();
 	void start();
+	void addRunnablePtr(const RunnablePtr& runnable);
 	static void waitAll();
 	static const Thread* currentThread();
 
@@ -63,6 +65,7 @@ private:
 	private:
 		Thread *mainThread;
 	};
+	std::vector<RunnablePtr> runnables;
 	static StaticBlock block;
 	void init(RunnablePtr target, const std::string &name);
 	static int nextThreadNum();

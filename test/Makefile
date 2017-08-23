@@ -1,9 +1,9 @@
 CPP =	g++
-CFLAGS =  -O -Wall -Wextra -Wpointer-arith -Wconditional-uninitialized -Wno-unused-parameter -Wno-deprecated-declarations -Werror -g 
+CFLAGS =  -O -Wall -Werror -g 
 LIBS = ../src/Thread.a
 INCS = -I ../src
 
-all:SimpleThreadTest RunnableTest
+all:SimpleThreadTest SimpleRunnableTest SyncTest
 
 
 SimpleThreadTest: SimpleThreadTest.o $(LIBS)
@@ -12,13 +12,19 @@ SimpleThreadTest: SimpleThreadTest.o $(LIBS)
 SimpleThreadTest.o: SimpleThreadTest.cpp
 	$(CPP) $(INCS) -c $(CFLAGS)  -o SimpleThreadTest.o SimpleThreadTest.cpp
 
-RunnableTest: RunnableTest.o $(LIBS)
-	$(CPP) $(INCS) -o RunnableTest RunnableTest.o $(LIBS) -lpthread
+SimpleRunnableTest: SimpleRunnableTest.o $(LIBS)
+	$(CPP) $(INCS) -o SimpleRunnableTest SimpleRunnableTest.o $(LIBS) -lpthread
 	
-RunnableTest.o: RunnableTest.cpp
-	$(CPP) $(INCS)  -c $(CFLAGS)  -o RunnableTest.o RunnableTest.cpp
+SimpleRunnableTest.o: SimpleRunnableTest.cpp
+	$(CPP) $(INCS)  -c $(CFLAGS)  -o SimpleRunnableTest.o SimpleRunnableTest.cpp
+
+SyncTest: SyncTest.o $(LIBS)
+	$(CPP) $(INCS) -o SyncTest SyncTest.o $(LIBS) -lpthread
+	
+SyncTest.o: SyncTest.cpp
+	$(CPP) $(INCS)  -c $(CFLAGS)  -o SyncTest.o SyncTest.cpp
 	
 clean:
-	-rm -rf SimpleThreadTest RunnableTest *.o
+	-rm -rf SimpleThreadTest SimpleRunnableTest SyncTest *.o
 
 .PHONY: clean

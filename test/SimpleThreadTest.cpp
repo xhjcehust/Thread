@@ -14,7 +14,7 @@ public:
     virtual void run()
     {
     		Thread::run();
-        std::cout << "I am a Thread\n";
+        std::cout << "I am Thread\n";
         sleep(2);
     }
     ~SimpleThread()
