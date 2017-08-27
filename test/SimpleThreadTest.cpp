@@ -13,19 +13,19 @@ class SimpleThread: public Thread
 public:
     virtual void run()
     {
-    		Thread::run();
+        Thread::run();
         std::cout << "I am Thread\n";
         sleep(2);
     }
     ~SimpleThread()
     {
-    		std::cout << "I can free myself\n";
+        std::cout << "I can free myself\n";
     }
 };
 
 int main(int argc, char* argv[])
 {
-	SimpleThread *thread = new SimpleThread;
-	thread->start();
-	return 0;
+    SimpleThread *thread = new SimpleThread;
+    thread->start();
+    return 0;
 }

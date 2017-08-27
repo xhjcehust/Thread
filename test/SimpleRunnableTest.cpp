@@ -14,20 +14,20 @@ class SimpleRunnable: public Runnable
 public:
     virtual void run()
     {
-    		std::cout << "SimpleRunnable" << std::endl;
-    		sleep(2);
+        std::cout << "SimpleRunnable" << std::endl;
+        sleep(2);
     }
     ~SimpleRunnable()
-	{
-		std::cout << "I can free myself\n";
-	}
+    {
+        std::cout << "I can free myself\n";
+    }
 };
 
 int main(int argc, char* argv[])
 {
-	Runnable *runnable = new SimpleRunnable();
-	Thread *thread = new Thread(runnable);
-	thread->start();
+    Runnable *runnable = new SimpleRunnable();
+    Thread *thread = new Thread(runnable);
+    thread->start();
 
-	return 0;
+    return 0;
 }

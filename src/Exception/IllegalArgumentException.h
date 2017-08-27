@@ -13,9 +13,9 @@
 class IllegalArgumentException: public BaseException
 {
 public:
-	IllegalArgumentException(std::string message = "", int code = 0):
-		BaseException(message, code)
-	{}
+    IllegalArgumentException(std::string message = "", int code = 0):
+        BaseException(message, code)
+    {}
 };
 
 

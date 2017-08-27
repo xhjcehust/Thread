@@ -12,7 +12,7 @@ class RunnablePtr
 {
 public:
     RunnablePtr(Runnable* obj = NULL): ptr(obj)
-	{
+    {
         init();
     }
     RunnablePtr(RunnablePtr const& rhs): ptr(rhs.ptr)
@@ -22,20 +22,20 @@ public:
     RunnablePtr& operator=(RunnablePtr const& rhs)
     {
         if (ptr == rhs.ptr) {
-        		return *this;
+            return *this;
         }
         Runnable* oldptr = ptr;
         ptr = rhs.ptr;
         init();
         if (oldptr != NULL) {
-        		oldptr->decRefCount();
+            oldptr->decRefCount();
         }
         return *this;
     }
     ~RunnablePtr()
     {
         if(ptr) {
-        		ptr->decRefCount();
+            ptr->decRefCount();
         }
     }
     Runnable* operator->() const
@@ -48,12 +48,12 @@ public:
     }
     bool operator==(RunnablePtr const& rhs) const
     {
-    		return (ptr == rhs.ptr);
+        return (ptr == rhs.ptr);
     }
     bool operator!=(RunnablePtr const& rhs) const
-	{
-    		return !(*this == rhs);
-	}
+    {
+        return !(*this == rhs);
+    }
 private:
     Runnable* ptr;
     void init()

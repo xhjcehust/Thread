@@ -13,9 +13,9 @@
 class IllegalThreadStateException: public BaseException
 {
 public:
-	IllegalThreadStateException(std::string message = "", int code = 0):
-			BaseException(message, code)
-	{}
+    IllegalThreadStateException(std::string message = "", int code = 0):
+        BaseException(message, code)
+    {}
 };
 
 

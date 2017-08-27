@@ -18,60 +18,60 @@
 class Thread: public Runnable
 {
 public:
-	Thread();
-	Thread(const std::string &name);
-	Thread(RunnablePtr runnable);
-	std::string getName() const;
-	void setName(const std::string &name);
-	pthread_t getId();
-	int getPriority();
-	void setPriority(int priority);
-	int getPolicy();
-	void setPolicy(int policy);
-	virtual void run();
-	void start();
-	void addRunnablePtr(const RunnablePtr& runnable);
-	bool isAlive();
-	void join();
-	static void waitAll();
-	static const Thread* currentThread();
+    Thread();
+    Thread(const std::string &name);
+    Thread(RunnablePtr runnable);
+    std::string getName() const;
+    void setName(const std::string &name);
+    pthread_t getId();
+    int getPriority();
+    void setPriority(int priority);
+    int getPolicy();
+    void setPolicy(int policy);
+    virtual void run();
+    void start();
+    void addRunnablePtr(const RunnablePtr& runnable);
+    bool isAlive();
+    void join();
+    static void waitAll();
+    static const Thread* currentThread();
 
-	/* Store all Threads information, tid => pointer to thread instance */
-	static std::map<pthread_t, Thread*> allThreads;
+    /* Store all Threads information, tid => pointer to thread instance */
+    static std::map<pthread_t, Thread*> allThreads;
 protected:
-	virtual ~Thread();
+    virtual ~Thread();
 private:
-	std::string name;
-	int policy;
-	sched_param param;
-	bool started;
-	pthread_t tid;
-	pthread_attr_t attr;
-	/* What will be run. */
-	RunnablePtr target;
-	/* For autonumbering anonymous threads. */
-	static int threadInitNumber;
+    std::string name;
+    int policy;
+    sched_param param;
+    bool started;
+    pthread_t tid;
+    pthread_attr_t attr;
+    /* What will be run. */
+    RunnablePtr target;
+    /* For autonumbering anonymous threads. */
+    static int threadInitNumber;
 
-	class StaticBlock
-	{
-	public:
-		StaticBlock()
-		{
-			mainThread = new Thread("main");
-			Thread::allThreads[pthread_self()] = mainThread;
-		}
-		~StaticBlock()
-		{
-			delete mainThread;
-		}
-	private:
-		Thread *mainThread;
-	};
-	std::vector<RunnablePtr> runnables;
-	static StaticBlock block;
-	void init(RunnablePtr target, const std::string &name);
-	static int nextThreadNum();
-	static void *routine(void *args);
+    class StaticBlock
+    {
+    public:
+        StaticBlock()
+        {
+            mainThread = new Thread("main");
+            Thread::allThreads[pthread_self()] = mainThread;
+        }
+        ~StaticBlock()
+        {
+            delete mainThread;
+        }
+    private:
+        Thread *mainThread;
+    };
+    std::vector<RunnablePtr> runnables;
+    static StaticBlock block;
+    void init(RunnablePtr target, const std::string &name);
+    static int nextThreadNum();
+    static void *routine(void *args);
 };
 
 #endif /* _THREAD_H_ */

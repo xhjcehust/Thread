@@ -11,56 +11,56 @@
 
 Lock::Lock()
 {
-	pthread_mutexattr_t attr;
-	pthread_mutexattr_init(&attr);
-	pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-	pthread_mutex_init(&lock, &attr);
-	pthread_mutexattr_destroy(&attr);
+    pthread_mutexattr_t attr;
+    pthread_mutexattr_init(&attr);
+    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init(&lock, &attr);
+    pthread_mutexattr_destroy(&attr);
 
-	memset(&lockOwnerTid, 0, sizeof(lockOwnerTid));
+    memset(&lockOwnerTid, 0, sizeof(lockOwnerTid));
 
-	pthread_cond_init(&cond, NULL);
+    pthread_cond_init(&cond, NULL);
 }
 
 void Lock::synchronize_begin(Lock *lock)
 {
-	pthread_mutex_lock(&lock->lock);
-	lock->lockOwnerTid = pthread_self();
+    pthread_mutex_lock(&lock->lock);
+    lock->lockOwnerTid = pthread_self();
 }
 
 void Lock::synchronize_end(Lock *lock)
 {
-	pthread_mutex_unlock(&lock->lock);
-	memset(&lock->lockOwnerTid, 0, sizeof(lock->lockOwnerTid));
+    pthread_mutex_unlock(&lock->lock);
+    memset(&lock->lockOwnerTid, 0, sizeof(lock->lockOwnerTid));
 }
 
 void Lock::wait()
 {
-	if (lockOwnerTid != pthread_self()) {
-		throw new IllegalMonitorStateException();
-	}
-	pthread_cond_wait(&cond, &lock);
+    if (lockOwnerTid != pthread_self()) {
+        throw new IllegalMonitorStateException();
+    }
+    pthread_cond_wait(&cond, &lock);
 }
 
 void Lock::notify()
 {
-	if (lockOwnerTid != pthread_self()) {
-		throw new IllegalMonitorStateException();
-	}
-	pthread_cond_signal(&cond);
+    if (lockOwnerTid != pthread_self()) {
+        throw new IllegalMonitorStateException();
+    }
+    pthread_cond_signal(&cond);
 }
 
 void Lock::notifyAll()
 {
-	if (lockOwnerTid != pthread_self()) {
-		throw new IllegalMonitorStateException();
-	}
-	pthread_cond_broadcast(&cond);
+    if (lockOwnerTid != pthread_self()) {
+        throw new IllegalMonitorStateException();
+    }
+    pthread_cond_broadcast(&cond);
 }
 
 
 Lock::~Lock()
 {
-	pthread_cond_destroy(&cond);
-	pthread_mutex_destroy(&lock);
+    pthread_cond_destroy(&cond);
+    pthread_mutex_destroy(&lock);
 }

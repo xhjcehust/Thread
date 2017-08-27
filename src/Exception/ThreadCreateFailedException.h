@@ -13,9 +13,9 @@
 class ThreadCreateFailedException: public BaseException
 {
 public:
-	ThreadCreateFailedException(std::string message = "", int code = 0):
-		BaseException(message, code)
-	{}
+    ThreadCreateFailedException(std::string message = "", int code = 0):
+        BaseException(message, code)
+    {}
 };
 
 

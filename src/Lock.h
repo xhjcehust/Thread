@@ -11,17 +11,17 @@
 class Lock
 {
 public:
-	Lock();
-	~Lock();
-	static void synchronize_begin(Lock *lock);
-	static void synchronize_end(Lock *lock);
-	void wait();
-	void notify();
-	void notifyAll();
+    Lock();
+    ~Lock();
+    static void synchronize_begin(Lock *lock);
+    static void synchronize_end(Lock *lock);
+    void wait();
+    void notify();
+    void notifyAll();
 protected:
-	pthread_mutex_t lock;
-	pthread_cond_t cond;
-	pthread_t lockOwnerTid;
+    pthread_mutex_t lock;
+    pthread_cond_t cond;
+    pthread_t lockOwnerTid;
 };
 
 #endif /* LOCK_H_ */

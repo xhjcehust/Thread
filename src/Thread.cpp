@@ -15,148 +15,148 @@
 
 Thread::Thread()
 {
-	std::ostringstream os;
-	os << nextThreadNum();
-	init(NULL, "Thread-" + os.str());
+    std::ostringstream os;
+    os << nextThreadNum();
+    init(NULL, "Thread-" + os.str());
 }
 
 Thread::Thread(const std::string &name)
 {
-	init(NULL, name);
+    init(NULL, name);
 }
 
 Thread::Thread(RunnablePtr target)
 {
-	std::ostringstream os;
-	os << nextThreadNum();
-	init(target, "Thread-" + os.str());
+    std::ostringstream os;
+    os << nextThreadNum();
+    init(target, "Thread-" + os.str());
 }
 
 int Thread::nextThreadNum()
 {
-	return threadInitNumber++;
+    return threadInitNumber++;
 }
 
 void Thread::run()
 {
-	if (target != NULL) {
-		target->run();
-	}
+    if (target != NULL) {
+        target->run();
+    }
 }
 
 void Thread::start()
 {
-	if (this->started) {
-		throw new IllegalThreadStateException("Thread has been started");
-	}
-	pthread_attr_init(&attr);
-	pthread_attr_setschedpolicy(&attr, policy);
-	pthread_attr_setschedparam(&attr, &param);
-	if (0 != pthread_create(&tid, &attr, &routine, this)) {
-		throw new ThreadCreateFailedException("pthread_create failed");
-	}
-	allThreads[tid] = this;
+    if (this->started) {
+        throw new IllegalThreadStateException("Thread has been started");
+    }
+    pthread_attr_init(&attr);
+    pthread_attr_setschedpolicy(&attr, policy);
+    pthread_attr_setschedparam(&attr, &param);
+    if (0 != pthread_create(&tid, &attr, &routine, this)) {
+        throw new ThreadCreateFailedException("pthread_create failed");
+    }
+    allThreads[tid] = this;
 }
 
 void *Thread::routine(void *args)
 {
-	Thread *thiz = (Thread *)args;
-	thiz->started = true;
-	RunnablePtr runnable = thiz;
-	try {
-		runnable->run();
-	} catch (...) {
+    Thread *thiz = (Thread *)args;
+    thiz->started = true;
+    RunnablePtr runnable = thiz;
+    try {
+        runnable->run();
+    } catch (...) {
 
-	}
-	thiz->started = false;
-	synchronize_begin(thiz);
-	thiz->notify();
-	synchronize_end(thiz);
-	return NULL;
+    }
+    thiz->started = false;
+    synchronize_begin(thiz);
+    thiz->notify();
+    synchronize_end(thiz);
+    return NULL;
 }
 
 void Thread::init(RunnablePtr target, const std::string &name)
 {
-	this->started = false;
-	this->target = target;
-	this->name = name;
-	pthread_getschedparam(pthread_self(), &this->policy, &this->param);
+    this->started = false;
+    this->target = target;
+    this->name = name;
+    pthread_getschedparam(pthread_self(), &this->policy, &this->param);
 }
 
 std::string Thread::getName() const
 {
-	return name;
+    return name;
 }
 
 void Thread::setName(const std::string &name)
 {
-	this->name = name;
+    this->name = name;
 }
 
 int Thread::getPriority()
 {
-	return this->param.sched_priority;
+    return this->param.sched_priority;
 }
 
 void Thread::setPriority(int priority)
 {
-	int maxPriority = sched_get_priority_max(policy);
-	int minPriority = sched_get_priority_min(policy);
-	if (priority > maxPriority || priority < minPriority) {
-		throw new IllegalArgumentException("invalid priority");
-	}
-	this->param.sched_priority = priority;
+    int maxPriority = sched_get_priority_max(policy);
+    int minPriority = sched_get_priority_min(policy);
+    if (priority > maxPriority || priority < minPriority) {
+        throw new IllegalArgumentException("invalid priority");
+    }
+    this->param.sched_priority = priority;
 }
 
 int Thread::getPolicy()
 {
-	return this->policy;
+    return this->policy;
 }
 
 void Thread::setPolicy(int policy)
 {
-	this->policy = policy;
+    this->policy = policy;
 }
 
 pthread_t Thread::getId()
 {
-	return tid;
+    return tid;
 }
 
 const Thread* Thread::currentThread()
 {
-	return allThreads.at(pthread_self());
+    return allThreads.at(pthread_self());
 }
 
 void Thread::waitAll()
 {
-	pthread_t tid = pthread_self();
-	for(std::map<pthread_t, Thread*>::iterator iter = Thread::allThreads.begin();
-				iter != Thread::allThreads.end(); iter++) {
+    pthread_t tid = pthread_self();
+    for(std::map<pthread_t, Thread*>::iterator iter = Thread::allThreads.begin();
+            iter != Thread::allThreads.end(); iter++) {
 
-		if (iter->first != tid) {
-			pthread_join(iter->first, NULL);
-		}
-	}
+        if (iter->first != tid) {
+            pthread_join(iter->first, NULL);
+        }
+    }
 }
 
 void Thread::addRunnablePtr(const RunnablePtr& runnable)
 {
-	runnables.push_back(runnable);
+    runnables.push_back(runnable);
 }
 
 bool Thread::isAlive()
 {
-	return started;
+    return started;
 }
 
 void Thread::join()
 {
-	synchronize_begin(this);
-	while (isAlive()) {
-		wait();
-	}
-	synchronize_end(this);
+    synchronize_begin(this);
+    while (isAlive()) {
+        wait();
+    }
+    synchronize_end(this);
 }
 
 Thread::~Thread()

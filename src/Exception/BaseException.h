@@ -14,25 +14,25 @@
 class BaseException
 {
 public:
-	BaseException(std::string message = "", int code = 0)
-	{
-		this->message = "Exception in thread \"" +
-				Thread::currentThread()->getName() + "\": " + message;
-		this->code = code;
-	}
-	std::string getMessage()
-	{
-		return message;
-	}
-	int getCode()
-	{
-		return code;
-	}
-	~BaseException()
-	{}
+    BaseException(std::string message = "", int code = 0)
+    {
+        this->message = "Exception in thread \"" +
+                        Thread::currentThread()->getName() + "\": " + message;
+        this->code = code;
+    }
+    std::string getMessage()
+    {
+        return message;
+    }
+    int getCode()
+    {
+        return code;
+    }
+    ~BaseException()
+    {}
 private:
-	std::string message;
-	int code;
+    std::string message;
+    int code;
 };
 
 

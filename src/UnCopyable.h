@@ -11,11 +11,11 @@
 class UnCopyable
 {
 public:
-	UnCopyable() {}
-	~UnCopyable() {}
+    UnCopyable() {}
+    ~UnCopyable() {}
 private:
-	UnCopyable(const UnCopyable&);
-	UnCopyable& operator=(const UnCopyable&);
+    UnCopyable(const UnCopyable&);
+    UnCopyable& operator=(const UnCopyable&);
 };
 
 #endif /* UNCOPYABLE_H_ */

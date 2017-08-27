@@ -13,9 +13,9 @@
 class IllegalMonitorStateException: public BaseException
 {
 public:
-	IllegalMonitorStateException(std::string message = "", int code = 0):
-			BaseException(message, code)
-	{}
+    IllegalMonitorStateException(std::string message = "", int code = 0):
+        BaseException(message, code)
+    {}
 };
 
 
