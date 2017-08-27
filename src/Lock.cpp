@@ -5,6 +5,7 @@
  *      Author: marsnowxiao
  */
 
+#include <string.h>
 #include "_Runnable.h"
 #include "Exception/IllegalMonitorStateException.h"
 
