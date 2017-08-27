@@ -56,17 +56,22 @@ void Thread::start()
 		throw new ThreadCreateFailedException("pthread_create failed");
 	}
 	allThreads[tid] = this;
-	this->started = true;
 }
 
 void *Thread::routine(void *args)
 {
-	RunnablePtr runnable = (Thread *)args;
+	Thread *thiz = (Thread *)args;
+	thiz->started = true;
+	RunnablePtr runnable = thiz;
 	try {
 		runnable->run();
 	} catch (...) {
 
 	}
+	thiz->started = false;
+	synchronize_begin(thiz);
+	thiz->notify();
+	synchronize_end(thiz);
 	return NULL;
 }
 
@@ -138,6 +143,20 @@ void Thread::waitAll()
 void Thread::addRunnablePtr(const RunnablePtr& runnable)
 {
 	runnables.push_back(runnable);
+}
+
+bool Thread::isAlive()
+{
+	return started;
+}
+
+void Thread::join()
+{
+	synchronize_begin(this);
+	while (isAlive()) {
+		wait();
+	}
+	synchronize_end(this);
 }
 
 Thread::~Thread()

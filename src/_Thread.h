@@ -31,6 +31,8 @@ public:
 	virtual void run();
 	void start();
 	void addRunnablePtr(const RunnablePtr& runnable);
+	bool isAlive();
+	void join();
 	static void waitAll();
 	static const Thread* currentThread();
 

@@ -21,7 +21,7 @@ public:
 	{
 		synchronize_begin(lock);
 		std::cout << Thread::currentThread()->getName() << " begin to wait" << std::endl;
-		while (*ptr != 5) {
+		while (*ptr < 5) {
 			lock->wait();
 		}
 		std::cout << Thread::currentThread()->getName() << " wake up" << std::endl;
@@ -45,7 +45,7 @@ public:
 		synchronize_begin(lock);
 		for (int i = 0; i < 10; i++) {
 			(*ptr)++;
-			std::cout << (*ptr) << std::endl;
+			std::cout << "value = " << (*ptr) << std::endl;
 			if (*ptr == 5) {
 				lock->notify();
 			}
@@ -60,12 +60,15 @@ private:
 
 int main(int argc, char* argv[])
 {
-	Lock *lock = new Lock();
-	int i = 0;
-	Thread *waitT = new WaitThread(lock, &i);
+	Lock lock;
+	int value = 0;
+	Thread *waitT = new WaitThread(&lock, &value);
 	waitT->start();
 
-	Thread *notifyT = new NotifyThread(lock, &i);
+	Thread *notifyT = new NotifyThread(&lock, &value);
 	notifyT->start();
+
+	waitT->join();
+	notifyT->join();
 	return 0;
 }
