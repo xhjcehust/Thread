@@ -60,12 +60,12 @@ private:
 
 int main(int argc, char* argv[])
 {
-	Lock lock;
+	Lock *lock = new Lock();
 	int i = 0;
-	Thread *waitT = new WaitThread(&lock, &i);
+	Thread *waitT = new WaitThread(lock, &i);
 	waitT->start();
 
-	Thread *notifyT = new NotifyThread(&lock, &i);
+	Thread *notifyT = new NotifyThread(lock, &i);
 	notifyT->start();
 	return 0;
 }
