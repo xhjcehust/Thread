@@ -74,11 +74,11 @@ Thread.a调用了你所写的main函数。在最后编译生成的文件之中�
 
 * 基础Thread类和Runnable类功能
 * synchronize同步语句块功能
+* 线程间通信之wait、notify以及join功能
 
 后续需要开发的功能包括：
 
 * 线程停止，暂停，信号等
-* Thread线程间通信互斥机制
 * 支持线程组等特性。
 * ....
 
