@@ -9,6 +9,7 @@
 #define THREAD_H_
 
 #include "_Thread.h"
+#include "Lock.h"
 #include "Alias.h"
 
 #endif /* THREAD_H_ */

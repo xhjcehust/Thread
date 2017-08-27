@@ -11,17 +11,15 @@
 #include <pthread.h>
 #include "UnCopyable.h"
 #include "RefCountable.h"
+#include "Lock.h"
 
-class Runnable: private UnCopyable, public RefCountable
+class Runnable: private UnCopyable, public RefCountable, public Lock
 {
 public:
 	Runnable();
 	virtual void run() = 0;
 	void destory();
-	static void synchronize_begin(Runnable *runnable);
-	static void synchronize_end(Runnable *runnable);
 protected:
-	pthread_mutex_t lock;
 	virtual ~Runnable() = 0;
 };
 

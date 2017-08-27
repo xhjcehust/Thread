@@ -3,7 +3,7 @@ CFLAGS =  -O -Wall -Werror -g
 LIBS = ../src/Thread.a
 INCS = -I ../src
 
-all:SimpleThreadTest SimpleRunnableTest SyncTest
+all:SimpleThreadTest SimpleRunnableTest SyncTest WaitNotifyTest
 
 
 SimpleThreadTest: SimpleThreadTest.o $(LIBS)
@@ -23,6 +23,12 @@ SyncTest: SyncTest.o $(LIBS)
 	
 SyncTest.o: SyncTest.cpp
 	$(CPP) $(INCS)  -c $(CFLAGS)  -o SyncTest.o SyncTest.cpp
+	
+WaitNotifyTest: WaitNotifyTest.o $(LIBS)
+	$(CPP) $(INCS) -o WaitNotifyTest WaitNotifyTest.o $(LIBS) -lpthread
+	
+WaitNotifyTest.o: WaitNotifyTest.cpp
+	$(CPP) $(INCS)  -c $(CFLAGS)  -o WaitNotifyTest.o WaitNotifyTest.cpp
 	
 clean:
 	-rm -rf SimpleThreadTest SimpleRunnableTest SyncTest *.o

@@ -9,13 +9,17 @@
 #define BASEEXCEPTION_H_
 
 #include <string>
+#include "../_Thread.h"
 
 class BaseException
 {
 public:
-	BaseException(std::string message = "", int code = 0):
-		message(message), code(code)
-	{}
+	BaseException(std::string message = "", int code = 0)
+	{
+		this->message = "Exception in thread \"" +
+				Thread::currentThread()->getName() + "\": " + message;
+		this->code = code;
+	}
 	std::string getMessage()
 	{
 		return message;

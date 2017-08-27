@@ -19,7 +19,7 @@ public:
     }
     ~SimpleRunnable()
 	{
-			std::cout << "I can free myself\n";
+		std::cout << "I can free myself\n";
 	}
 };
 
