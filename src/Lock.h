@@ -12,6 +12,7 @@ class Lock
 {
 public:
 	Lock();
+	~Lock();
 	static void synchronize_begin(Lock *lock);
 	static void synchronize_end(Lock *lock);
 	void wait();

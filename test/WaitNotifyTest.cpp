@@ -35,7 +35,7 @@ private:
 class NotifyThread: public Thread
 {
 public:
-	NotifyThread(Lock *lock, int *ptr): Thread()
+	NotifyThread(Lock *lock, int *ptr)
 	{
 		this->lock = lock;
 		this->ptr = ptr;

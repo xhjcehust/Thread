@@ -57,3 +57,10 @@ void Lock::notifyAll()
 	}
 	pthread_cond_broadcast(&cond);
 }
+
+
+Lock::~Lock()
+{
+	pthread_cond_destroy(&cond);
+	pthread_mutex_destroy(&lock);
+}

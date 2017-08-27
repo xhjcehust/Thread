@@ -21,7 +21,7 @@ Runnable::Runnable()
 
 Runnable::~Runnable()
 {
-	pthread_mutex_destroy(&lock);
+
 }
 
 void Runnable::destory()
